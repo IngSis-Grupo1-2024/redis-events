@@ -52,8 +52,8 @@ publishing {
     }
     publications {
         register<MavenPublication>("maven") {
-            groupId = "org.gradle.PrintScript"
-            artifactId = "library"
+            groupId = "org.gradle.redisevents"
+            artifactId = "events"
             version = "1.1.0-SNAPSHOT"
             from(components["java"])
         }
