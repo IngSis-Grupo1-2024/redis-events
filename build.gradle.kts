@@ -3,6 +3,8 @@ plugins {
     id("io.spring.dependency-management") version "1.1.5"
     kotlin("jvm") version "1.9.24"
     kotlin("plugin.spring") version "1.9.24"
+    id("java")
+    id("maven-publish")
 }
 
 group = "com.example"
@@ -36,3 +38,26 @@ kotlin {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/IngSis-Grupo1-2024/redis-events")
+            credentials {
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_AUTHOR")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+    publications {
+        register<MavenPublication>("maven") {
+            groupId = "org.gradle.PrintScript"
+            artifactId = "library"
+            version = "1.1.0-SNAPSHOT"
+            from(components["java"])
+        }
+
+    }
+}
+
